@@ -1,7 +1,9 @@
 
+import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/category.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/image_slider.dart';
+import 'package:app_shop_dien_tu/screens/Home/Widget/product_cart.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/search_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -60,8 +62,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
+              ),
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.78,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return ProductCart(
+                    product: products[index],
+                  );
+                },
               )
-            ],
+            ],            
           ),
         ),
       ),
