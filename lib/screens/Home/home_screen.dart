@@ -1,4 +1,5 @@
 
+import 'package:app_shop_dien_tu/screens/Home/Widget/category.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/image_slider.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/search_bar.dart';
@@ -38,6 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+              const SizedBox(height: 30),
+              const Categories(),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sản phẩm nổi bật",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    "Xem tất cả",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
