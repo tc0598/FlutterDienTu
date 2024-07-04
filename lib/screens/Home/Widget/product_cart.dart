@@ -1,6 +1,8 @@
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
+import 'package:app_shop_dien_tu/screens/Detail/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProductCart extends StatelessWidget {
   final Product product;
@@ -8,8 +10,11 @@ class ProductCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailScreen(product: product)));    
+      },
       child: Stack(
         children: [
           Container(
@@ -21,12 +26,12 @@ class ProductCart extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 15),
+                const SizedBox(height: 5),
                 Center(
                   child: Image.asset(
                     product.image,
-                    height: 130,
-                    width: 130,
+                    height: 140,
+                    width: 140,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -46,7 +51,7 @@ class ProductCart extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      "${product.price}",
+                      formatCurrency.format(product.price),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,                        

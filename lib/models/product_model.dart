@@ -29,7 +29,7 @@ class Product {
 final List<Product> products = [
   Product(
     title: "iPhone 15 Pro Max",
-    description: "iPhone 15 Pro Max sở hữu màn hình Super Retina XDR OLED 6.7 inches với độ phân giải 2796 x 1290 pixels, cung cấp trải nghiệm hình ảnh sắc nét, chân thực. So với các phiên bản tiền nhiệm, thế hệ iPhone 15 bản Pro Max đảm bảo mang tới hiệu năng mạnh mẽ với sự hỗ trợ của chipset Apple A17 Pro, cùng bộ nhớ ấn tượng. Đặc biệt hơn, điện thoại iPhone 15 ProMax mới này còn được đánh giá cao với camera sau 48MP và camera trước 12MP, hỗ trợ chụp ảnh với độ rõ nét cực đỉnh.",
+    description: "iPhone 15 Pro Max sở hữu màn hình Super Retina XDR OLED 6.7 inches với độ phân giải 2796 x 1290 pixels",
     image: "images/iphone-15-pro-max.png",
     price: 29190000,
     seller: "NTC",
@@ -44,18 +44,18 @@ final List<Product> products = [
     quantity: 1,
   ),
   Product(
-    title: "iPhone 15 Pro Max",
-    description: "iPhone 15 Pro Max sở hữu màn hình Super Retina XDR OLED 6.7 inches với độ phân giải 2796 x 1290 pixels, cung cấp trải nghiệm hình ảnh sắc nét, chân thực. So với các phiên bản tiền nhiệm, thế hệ iPhone 15 bản Pro Max đảm bảo mang tới hiệu năng mạnh mẽ với sự hỗ trợ của chipset Apple A17 Pro, cùng bộ nhớ ấn tượng. Đặc biệt hơn, điện thoại iPhone 15 ProMax mới này còn được đánh giá cao với camera sau 48MP và camera trước 12MP, hỗ trợ chụp ảnh với độ rõ nét cực đỉnh.",
-    image: "images/iphone-15-pro-max.png",
-    price: 29190000,
+    title: "Macbook Air M1",
+    description: "Macbook Air M1 là dòng sản phẩm có thiết kế mỏng nhẹ, sang trọng và tinh tế cùng với đó là giá thành phải chăng nên MacBook Air đã thu hút được đông đảo người dùng yêu thích và lựa chọn.",
+    image: "images/air_m2.png",
+    price: 18690000,
     seller: "NTC",
     colors: [
       Colors.black,
       Colors.blue,
       Colors.orange,
     ],
-    category: "Điện thoại",
-    review: "(320 đánh giá)",
+    category: "Laptop",
+    review: "(270 đánh giá)",
     rate: 4.8,
     quantity: 1,
   ),
