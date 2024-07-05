@@ -1,6 +1,6 @@
 import 'package:app_shop_dien_tu/screens/Cart/cart_screen.dart';
 import 'package:app_shop_dien_tu/screens/Home/home_screen.dart';
-import 'package:app_shop_dien_tu/screens/favorite.dart';
+import 'package:app_shop_dien_tu/screens/Favorite/favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
