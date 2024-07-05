@@ -1,3 +1,9 @@
-# app_shop_dien_tu
+<!DOCTYPE html>
+<html>
+<body>
 
-A new Flutter project.
+<h1>App Flutter Điện tử</h1>
+<p>Đây là hình ảnh các thành viên nghiện game của nhóm</p>
+
+</body>
+</html>
