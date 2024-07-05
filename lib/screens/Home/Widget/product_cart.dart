@@ -13,7 +13,10 @@ class ProductCart extends StatelessWidget {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailScreen(product: product)));    
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailScreen(product: product)));
       },
       child: Stack(
         children: [
@@ -28,11 +31,14 @@ class ProductCart extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Center(
-                  child: Image.asset(
-                    product.image,
-                    height: 140,
-                    width: 140,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: product.image,
+                    child: Image.asset(
+                      product.image,
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -48,34 +54,49 @@ class ProductCart extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      formatCurrency.format(product.price),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,                        
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        formatCurrency.format(product.price),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: List.generate(
-                        product.colors.length,
-                        (index) => Container(
-                          width: 18,
-                          height: 18,
-                          margin: const EdgeInsets.only(right: 4),
-                          decoration: BoxDecoration(
-                            color: product.colors[index],
-                            shape: BoxShape.circle,
-                          ),
-                        )
-                      ),
-                    )
-                  ]
-                )
+                      Row(
+                        children: List.generate(
+                            product.colors.length,
+                            (index) => Container(
+                                  width: 18,
+                                  height: 18,
+                                  margin: const EdgeInsets.only(right: 4),
+                                  decoration: BoxDecoration(
+                                    color: product.colors[index],
+                                    shape: BoxShape.circle,
+                                  ),
+                                )),
+                      )
+                    ])
               ],
             ),
-          )
+          ),
+          Positioned(
+              child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: const BoxDecoration(
+                color: color2,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(10)
+                ),
+              ),
+              child: GestureDetector(onTap: () {},
+              child: const Icon(Icons.favorite_border,color: Colors.white,size: 22,),),
+            ),
+          ))
         ],
       ),
     );

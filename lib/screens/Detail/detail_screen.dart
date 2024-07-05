@@ -26,7 +26,9 @@ class _DetailScreenState extends State<DetailScreen> {
       floatingActionButton: AddToCart(product: widget.product),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
+        child:SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const DetailAppBar(),
             MyImageSlider(
@@ -83,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    "Color",
+                    "Màu sản phẩm",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
                   const SizedBox(height: 20),
@@ -137,6 +139,7 @@ class _DetailScreenState extends State<DetailScreen> {
             )
           ],
         ),
+      ),
       ),
     );
   }
