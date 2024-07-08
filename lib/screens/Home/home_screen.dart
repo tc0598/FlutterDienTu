@@ -1,11 +1,12 @@
-
+import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
-import 'package:app_shop_dien_tu/screens/Home/Widget/category.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/image_slider.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/product_cart.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/search_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/category.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,8 +17,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentSlider = 0;
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    List<List<Product>> selectedCategories = [
+      products,
+      phones,
+      laptops,
+      watches,
+      headphones,
+      televisions
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -42,7 +53,53 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               const SizedBox(height: 30),
-              const Categories(),
+              SizedBox(
+                height: 130,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoriesList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: selectedIndex == index
+                              ? color2
+                              : Colors.transparent,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          categoriesList[index].image),
+                                      fit: BoxFit.fill)),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              categoriesList[index].title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -72,14 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                 ),
-                itemCount: products.length,
+                itemCount: selectedCategories[selectedIndex].length,
                 itemBuilder: (context, index) {
                   return ProductCart(
-                    product: products[index],
+                    product: selectedCategories[selectedIndex][index],
                   );
                 },
               )
-            ],            
+            ],
           ),
         ),
       ),

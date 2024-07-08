@@ -30,7 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const DetailAppBar(),
+            DetailAppBar(product: widget.product),
             MyImageSlider(
               image: widget.product.image,
               onChange: (index) {

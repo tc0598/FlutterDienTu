@@ -1,12 +1,14 @@
 import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CheckOutBox extends StatelessWidget {
   const CheckOutBox({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_Vn');
     final provider = CartProvider.of(context);
     return Container(
       height: 280,
@@ -62,8 +64,9 @@ class CheckOutBox extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${provider.totalPrice()}",
-                style: TextStyle(
+                // "\$${provider.totalPrice()}"
+                formatCurrency.format(provider.totalPrice()),
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -84,7 +87,8 @@ class CheckOutBox extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${provider.totalPrice()}",
+                // "\$${provider.totalPrice()}"
+                formatCurrency.format(provider.totalPrice()),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

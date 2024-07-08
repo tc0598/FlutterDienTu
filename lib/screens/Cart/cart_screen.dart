@@ -3,6 +3,7 @@ import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/screens/Cart/check_out.dart';
 import 'package:app_shop_dien_tu/screens/nav_bar_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -12,6 +13,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
   @override
   Widget build(BuildContext context) {
     final provider = CartProvider.of(context);
@@ -115,7 +117,8 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
-                                    "\$${cartItems.price}",
+                                    // "\$${cartItems.price}"
+                                    formatCurrency.format(cartItems.price),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,

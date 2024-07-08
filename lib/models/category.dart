@@ -8,7 +8,11 @@ class Category{
   });
 }
 
-final List<Category> categories = [
+final List<Category> categoriesList = [
+  Category(
+    title: "Tất cả", 
+    image: "images/tatca.png",
+  ),
   Category(
     title: "Điện thoại", 
     image: "images/dienthoai.png",

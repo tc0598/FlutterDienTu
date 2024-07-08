@@ -2,7 +2,6 @@ import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddToCart extends StatefulWidget {
   final Product product;

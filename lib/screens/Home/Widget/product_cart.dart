@@ -1,3 +1,4 @@
+import 'package:app_shop_dien_tu/Provider/favorite_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/screens/Detail/detail_screen.dart';
@@ -10,6 +11,7 @@ class ProductCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = FavoriteProvider.of(context);
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
     return GestureDetector(
       onTap: () {
@@ -31,14 +33,11 @@ class ProductCart extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Center(
-                  child: Hero(
-                    tag: product.image,
-                    child: Image.asset(
-                      product.image,
-                      height: 150,
-                      width: 150,
-                      fit: BoxFit.cover,
-                    ),
+                  child: Image.asset(
+                    product.image,
+                    height: 150,
+                    width: 150,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -89,12 +88,21 @@ class ProductCart extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: color2,
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(10)
+                    topRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(10)),
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  provider.toggleFavorite(product);
+                },
+                child: Icon(
+                  provider.isExist(product)?
+                  Icons.favorite:
+                  Icons.favorite_border,
+                  color: Colors.white,
+                  size: 22,
                 ),
               ),
-              child: GestureDetector(onTap: () {},
-              child: const Icon(Icons.favorite_border,color: Colors.white,size: 22,),),
             ),
           ))
         ],
