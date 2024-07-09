@@ -1,6 +1,7 @@
 import 'package:app_shop_dien_tu/screens/Cart/cart_screen.dart';
 import 'package:app_shop_dien_tu/screens/Home/home_screen.dart';
 import 'package:app_shop_dien_tu/screens/Favorite/favorite.dart';
+import 'package:app_shop_dien_tu/screens/Profile/account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -19,7 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     const HomeScreen(),
     const Favorite(),
     const CartScreen(),
-    Container(),
+    const AccountScreen(),
   ];
 
   @override

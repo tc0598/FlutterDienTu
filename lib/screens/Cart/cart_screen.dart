@@ -1,7 +1,6 @@
 import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/screens/Cart/check_out.dart';
-import 'package:app_shop_dien_tu/screens/nav_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -42,26 +41,28 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.all(15),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BottomNavBar(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
+                const SizedBox(width: 12),
+                // IconButton(
+                //   style: IconButton.styleFrom(
+                //     backgroundColor: Colors.white,
+                //     padding: const EdgeInsets.all(15),
+                //   ),
+                //   onPressed: () {
+                //     Navigator.pop(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => const BottomNavBar(),
+                //       ),
+                //     );
+                //   },
+                //   icon: const Icon(Icons.arrow_back_ios),
+                // ),
                 const Text(
                   "Giỏ hàng của tôi",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
+                    color: color2,
                   ),
                 ),
                 Container(),
