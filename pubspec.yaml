@@ -17,6 +17,11 @@ dependencies:
   intl: ^0.17.0
   line_awesome_flutter: ^3.0.1
   ionicons: ^0.2.2
+  http: ^1.2.1
+  dio: ^5.4.0
+  shared_preferences: ^2.2.2
+  animate_do: ^3.1.2
+  icons_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:

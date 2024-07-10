@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:app_shop_dien_tu/const.dart';
+import 'package:app_shop_dien_tu/data/sharepre.dart';
+import 'package:app_shop_dien_tu/models/user.dart';
 import 'package:app_shop_dien_tu/screens/Profile/Widget/forward_button.dart';
 import 'package:app_shop_dien_tu/screens/Profile/Widget/setting_item.dart';
 import 'package:app_shop_dien_tu/screens/Profile/edit_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -13,6 +17,23 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  // khi dùng tham số truyền vào phải khai báo biến trùng tên require
+  User user = User.userEmpty();
+  getDataUser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String strUser = pref.getString('user')!;
+
+    user = User.fromJson(jsonDecode(strUser));
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDataUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +41,10 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         backgroundColor: color1,
         title: const Text(
-          "Tài khoản", 
+          "Tài khoản",
           style: TextStyle(
-            color: color2,
-            fontSize: 25,
-            fontWeight: FontWeight.bold
-          ),
-        ),      
+              color: color2, fontSize: 25, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -38,13 +56,13 @@ class _AccountScreenState extends State<AccountScreen> {
               width: double.infinity,
               child: Row(
                 children: [
-                  Image.asset("images/profile.jpg", width: 70, height: 70),
+                  Image.asset("images/profile.jpg", width: 80, height: 80),
                   const SizedBox(width: 20),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Nguyễn Thành Công",
+                        "CCCD: ${user.idNumber}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -52,17 +70,66 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        "HUFLIT",
+                        "Tên: ${user.fullName}",
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
-                      )
+                      ),
+                      // Text(
+                      //   "Số điện thoại: ${user.phoneNumber}",
+                      //   style: TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                      // Text(
+                      //   "Giới tính: ${user.gender}",
+                      //   style: TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                      // Text(
+                      //   "Ngày sinh: ${user.birthDay}",
+                      //   style: TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "Năm học: ${user.schoolYear}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+
+                      Text(
+                        "Khóa học: ${user.schoolKey}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "Ngày tạo: ${user.dateCreated}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   ),
                   const Spacer(),
                   ForwardButton(onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const EditAccountScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditAccountScreen()));
                   }),
                 ],
               ),
@@ -82,15 +149,17 @@ class _AccountScreenState extends State<AccountScreen> {
               bgColor: Colors.blue.shade100,
               iconColor: Colors.blue,
               onTap: () {},
-            ),   
+            ),
             const SizedBox(height: 30),
             SettingItem(
               title: "Đăng xuất",
               icon: Icons.logout,
               bgColor: Colors.red.shade100,
               iconColor: Colors.redAccent,
-              onTap: () {},
-            ),        
+              onTap: () {
+                logOut(context);
+              },
+            ),
           ],
         ),
       ),
