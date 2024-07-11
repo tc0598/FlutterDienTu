@@ -37,18 +37,19 @@ Future<String> forgotPassword(Forgotpassword user) async {
       Response res = await api.sendRequest.put('/Auth/forgetPass',
           options: Options(headers: header('no token')), data: body);
       if (res.statusCode == 200) {
-        print("ok đổi pass thành công");
+        print("ok");
         print(res);
-        return "ok đổi pass thành công";
+        return "ok";
       } else {
-        print("Lỗi");
-        return "Lỗi";
+        print("fail");
+        return "forgotpass fail";
       }
     } catch (ex) {
       print(ex);
       rethrow;
     }
   }
+  //079203025606
 
 Future<String> register(Signup user) async {
     try {
@@ -68,12 +69,12 @@ Future<String> register(Signup user) async {
       Response res = await api.sendRequest.post('/Student/signUp',
           options: Options(headers: header('no token')), data: body);
       if (res.statusCode == 200) {
-        print("ok Đăng kí thành công");
+        print("123");
         print(res);
-        return "ok Đăng kí thành công";
+        return "123";
       } else {
-        print("Lỗi");
-        return "Lỗi";
+        print("fail");
+        return "signup fail";
       }
     } catch (ex) {
       print(ex);

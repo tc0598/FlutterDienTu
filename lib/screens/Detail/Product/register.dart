@@ -305,9 +305,9 @@ class _RegisterState extends State<Register> {
                                     decoration: const InputDecoration(
                                       labelText: "Hình ảnh",
                                       labelStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 15,
-                                          ),
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                      ),
                                       icon: Icon(Icons.image,
                                           color: Colors.orange),
                                     ),
@@ -403,7 +403,7 @@ class _RegisterState extends State<Register> {
                           child: MaterialButton(
                             onPressed: () async {
                               String respone = await register();
-                              if (respone == "ok") {
+                              if (respone == "123") {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
