@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: selectedIndex == index
-                              ? color2
+                              ? Color.fromARGB(255, 255, 211, 167)
                               : Colors.transparent,
                         ),
                         child: Column(

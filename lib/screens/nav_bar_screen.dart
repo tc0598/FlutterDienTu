@@ -46,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(microseconds: 400),
-              tabBackgroundColor: const Color.fromARGB(255, 236, 121, 68),
+              tabBackgroundColor: Color.fromARGB(255, 241, 96, 29),
               color: Colors.black,
               tabs: const [
                 GButton(
