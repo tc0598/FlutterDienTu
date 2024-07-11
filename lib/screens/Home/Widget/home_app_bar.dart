@@ -1,4 +1,5 @@
 import 'package:app_shop_dien_tu/const.dart';
+import 'package:app_shop_dien_tu/screens/Cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -10,7 +11,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [                 
+      children: [
         IconButton(
           style: IconButton.styleFrom(
             backgroundColor: color1,
@@ -27,7 +28,12 @@ class CustomAppBar extends StatelessWidget {
             backgroundColor: color1,
             padding: const EdgeInsets.all(20),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartScreen()),
+            );
+          },
           icon: const Icon(Icons.shopping_cart_outlined),
         ),
       ],
