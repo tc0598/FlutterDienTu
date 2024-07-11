@@ -1,4 +1,3 @@
-import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/image_slider.dart';
