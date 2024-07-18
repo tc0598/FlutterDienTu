@@ -33,7 +33,7 @@ class ProductCart extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Center(
-                  child: Image.asset(
+                  child: Image.network(
                     product.image,
                     height: 150,
                     width: 150,
@@ -44,38 +44,13 @@ class ProductCart extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    product.title,
+                    product.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        formatCurrency.format(product.price),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Row(
-                        children: List.generate(
-                            product.colors.length,
-                            (index) => Container(
-                                  width: 18,
-                                  height: 18,
-                                  margin: const EdgeInsets.only(right: 4),
-                                  decoration: BoxDecoration(
-                                    color: product.colors[index],
-                                    shape: BoxShape.circle,
-                                  ),
-                                )),
-                      )
-                    ])
               ],
             ),
           ),

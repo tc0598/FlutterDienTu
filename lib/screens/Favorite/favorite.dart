@@ -57,7 +57,7 @@ class _FavoriteState extends State<Favorite> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    cartItems.title,
+                                    cartItems.name,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -65,7 +65,7 @@ class _FavoriteState extends State<Favorite> {
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
-                                    cartItems.category,
+                                    cartItems.categoryID.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,

@@ -303,7 +303,7 @@ class _RegisterState extends State<Register> {
                                   child: TextFormField(
                                     controller: _imageURL,
                                     decoration: const InputDecoration(
-                                      labelText: "Hình ảnh",
+                                      labelText: "Hình ảnh URL",
                                       labelStyle: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 15,

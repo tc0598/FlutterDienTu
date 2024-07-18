@@ -1,4 +1,6 @@
+import 'package:app_shop_dien_tu/models/category.dart';
 import 'package:app_shop_dien_tu/models/forgotpassword.dart';
+import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/models/register.dart';
 import 'package:app_shop_dien_tu/models/user.dart';
 import 'package:dio/dio.dart';
@@ -112,4 +114,34 @@ Future<String> login(String accountID, String password) async {
       rethrow;
     }
   }
+    Future<List<CategoryModel>> getCategory(
+      String accountID, String token) async {
+    try {
+      Response res = await api.sendRequest.get(
+          '/Category/getList?accountID=$accountID',
+          options: Options(headers: header(token)));
+      return res.data
+          .map((e) => CategoryModel.fromJson(e))
+          .cast<CategoryModel>()
+          .toList();
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+    Future<List<Product>> getProduct(String accountID, String token) async {
+    try {
+      Response res = await api.sendRequest.get(
+          '/Product/getList?accountID=$accountID',
+          options: Options(headers: header(token)));
+      return res.data
+          .map((e) => Product.fromJson(e))
+          .cast<Product>()
+          .toList();
+    } catch (ex) {
+      print('haha:::' + ex.toString());
+      rethrow;
+    }
+  }
 }
+

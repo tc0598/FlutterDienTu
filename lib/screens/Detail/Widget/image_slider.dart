@@ -12,7 +12,7 @@ class MyImageSlider extends StatelessWidget {
       child: PageView.builder(
         onPageChanged: onChange,
         itemBuilder: (context, index){
-          return Image.asset(image);
+          return Image.network(image);
         },
       ),
     );
