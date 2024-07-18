@@ -3,7 +3,6 @@ import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/models/user.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
-
 import 'package:app_shop_dien_tu/screens/Home/Widget/product_cart.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/search_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -13,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/category.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Product> _watch = [];
   late List<Product> _headphones = [];
   late List<Product> _televisions = [];
-
 
   @override
   void initState() {
@@ -58,20 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
     var user = User.fromJson(jsonDecode(strUser));
     var products = await APIRepository().getProduct(
         user.accountId ?? '21dh111747', prefs.getString('token').toString());
-     try {
+    try {
       setState(() {
         _products = products;
-        _phones = products.where((phone)=> phone.categoryID == 3536).toList();
-        _laptop = products.where((laptop)=> laptop.categoryID == 3537).toList();
-        _watch = products.where((watch)=> watch.categoryID == 3538).toList();
-        _headphones = products.where((headphones)=> headphones.categoryID == 3539).toList();
-        _televisions = products.where((televisions)=> televisions.categoryID == 3540).toList();
+        _phones = products.where((phone) => phone.categoryID == 3536).toList();
+        _laptop = products.where((laptop) => laptop.categoryID == 3537).toList();
+        _watch = products.where((watch) => watch.categoryID == 3538).toList();
+        _headphones = products.where((headphones) => headphones.categoryID == 3539).toList();
+        _televisions =
+            products.where((televisions) => televisions.categoryID == 3540).toList();
       });
-      print('Number of phones;: ${_phones.length}');
-      print('Number of laptop;: ${_laptop.length}');
-      print('Number of watch;: ${_watch.length}');
-      print('Number of headphones;: ${_headphones.length}');
-      print('Number of televisions;: ${_televisions.length}');
+      print('Number of phones: ${_phones.length}');
+      print('Number of laptop: ${_laptop.length}');
+      print('Number of watch: ${_watch.length}');
+      print('Number of headphones: ${_headphones.length}');
+      print('Number of televisions: ${_televisions.length}');
     } catch (e) {
       print('Error: $e');
     }
@@ -89,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     List<List<Product>> selectedCategories = [
@@ -97,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _phones,
       _laptop,
       _watch,
-      _headphones, 
+      _headphones,
       _televisions
     ];
 
@@ -115,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const MySearchBar(),
               const SizedBox(height: 20),
               _buildCarouselBanner(),
-              const SizedBox(height: 5),
+              const SizedBox(height: 20),
               SizedBox(
                 height: 130,
                 child: ListView.builder(
@@ -129,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       child: Container(
+                        margin: const EdgeInsets.only(right: 10),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -139,19 +138,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: [
                             Container(
-                                height: 50,
-                                width: 50,
-                                child: Image.network(
-                                  _categoriesTest[index].imageUrl,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                )),
+                              height: 50,
+                              width: 50,
+                              child: Image.network(
+                                _categoriesTest[index].imageUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                             const SizedBox(height: 5),
                             Text(
                               _categoriesTest[index].name,
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
@@ -162,7 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const Row(
+              const SizedBox(height: 20),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -172,12 +171,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  Text(
-                    "Xem tất cả",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.black54,
+                  TextButton(
+                    onPressed: () {
+                      // Handle view all action
+                    },
+                    child: Text(
+                      "Xem tất cả",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ],
@@ -197,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     product: selectedCategories[selectedIndex][index],
                   );
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -207,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCarouselBanner() {
     final List<String> imageList = [
-      'https://cdn.nguyenkimmall.com/images/detailed/691/iphone-12-chinh-thuc-mo-ban-iphone-12-pro-max-len-ngoi-thumbnail.jpg', // Thay thế bằng các URL hình ảnh thực tế
+      'https://cdn.nguyenkimmall.com/images/detailed/691/iphone-12-chinh-thuc-mo-ban-iphone-12-pro-max-len-ngoi-thumbnail.jpg',
       'https://cdn.dribbble.com/userupload/8799534/file/original-d7c202ba2a2b95667557864e88109d4d.png?resize=752x',
       'https://samnec.com.vn/uploads/images/122020/sony-tv.jpg',
     ];

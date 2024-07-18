@@ -1,5 +1,6 @@
 import 'package:app_shop_dien_tu/admin/model/menu_modal.dart';
 import 'package:app_shop_dien_tu/admin/responsive.dart';
+import 'package:app_shop_dien_tu/data/sharepre.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // Import các lớp và trang khác nếu cần
@@ -66,9 +67,12 @@ class _MenuState extends State<Menu> {
                       widget.scaffoldKey.currentState!.closeDrawer();
                       if (menu[i].title == "Danh mục sản phẩm") {
                         Navigator.pushNamed(context, '/category-admin');
-                      }
+                      }else
                       if (menu[i].title == "Sản phẩm") {
                         Navigator.pushNamed(context, '/product-admin');
+                      }else
+                      if (menu[i].title == "Signout"){
+                        logOut(context);
                       }
                     },
                     child: Row(

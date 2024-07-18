@@ -1,6 +1,7 @@
 // ignore_for_file: dead_code
 
 import 'package:animate_do/animate_do.dart';
+import 'package:app_shop_dien_tu/admin/dashboard.dart';
 import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/data/sharepre.dart';
 import 'package:app_shop_dien_tu/screens/Detail/Product/forgotpass.dart';
@@ -31,6 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
     var user = await APIRepository().current(token);
     // save share
     saveUser(user);
+    if(token.isNotEmpty && accountController.text == '21dh111747'){
+      Navigator.push(
+        context, MaterialPageRoute(builder: (context) =>  DashBoard()));
+    return token;
+    }
     //
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const BottomNavBar()));

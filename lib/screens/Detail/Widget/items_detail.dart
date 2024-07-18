@@ -12,7 +12,7 @@ class ItemsDetail extends StatelessWidget {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
     return Column(
       children: [
-        Row(
+        Column(
           children: [
             Text(
               product.name,
