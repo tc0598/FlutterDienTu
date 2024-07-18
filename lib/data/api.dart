@@ -114,6 +114,8 @@ Future<String> login(String accountID, String password) async {
       rethrow;
     }
   }
+    
+    
     Future<List<CategoryModel>> getCategory(
       String accountID, String token) async {
     try {

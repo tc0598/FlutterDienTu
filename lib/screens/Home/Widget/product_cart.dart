@@ -35,8 +35,8 @@ class ProductCart extends StatelessWidget {
                 Center(
                   child: Image.network(
                     product.image,
-                    height: 150,
-                    width: 150,
+                    height: 130,
+                    width: 130,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -51,6 +51,17 @@ class ProductCart extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10,),
+                Row(children: [
+                  Text(
+                  "\$${product.price}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],)
               ],
             ),
           ),

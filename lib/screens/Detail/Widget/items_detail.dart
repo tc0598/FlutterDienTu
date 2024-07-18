@@ -12,12 +12,29 @@ class ItemsDetail extends StatelessWidget {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
     return Column(
       children: [
-        Text(
-          product.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 25,
-          ),
+        Row(
+          children: [
+            Text(
+              product.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 25,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10,),
+        Row(
+          children: [
+            Text(
+              "\$${product.price}",
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 25,
+                color: Colors.red,
+              ),
+            ),
+          ],
         ),
       ],
     );

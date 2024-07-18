@@ -3,6 +3,7 @@ import 'package:app_shop_dien_tu/Provider/favorite_provider.dart';
 import 'package:app_shop_dien_tu/admin/const.dart';
 import 'package:app_shop_dien_tu/admin/dashboard.dart';
 import 'package:app_shop_dien_tu/admin/pages/categories/category_screen.dart';
+import 'package:app_shop_dien_tu/admin/pages/product/product_screen.dart';
 import 'package:app_shop_dien_tu/screens/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,11 +56,12 @@ class MainApp extends StatelessWidget {
             // fontFamily: 'IBMPlexSans',
             // brightness: Brightness.dark
           ),
-          // home: const LoginScreen(),
-          home: DashBoard(),
+          home: const LoginScreen(),
+          // home: DashBoard(),
           initialRoute: '/',
           routes: {
             '/category-admin': (context) => CategoryAdminScreen(),
+            // '/product-admin': (context) => ProductListScreen()
             // '/product-admin': (context) => ,
           },
         ),
