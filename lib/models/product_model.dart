@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 
 class Product {
   final int id;
   final String name;
   final String description;
   final String image;
-  final int price;
+  final dynamic price;
   final int categoryID;
   final String categoryName;
 
@@ -26,7 +25,7 @@ class Product {
         name: json['name'] ?? '',
         description: json["description"] ?? '',
         image: json["imageURL"] ?? '',
-        price: json["price"] ?? 0.0,
+        price: json["price"] ?? 0,
         categoryID: json["categoryID"] ?? 0,
         categoryName: json["categoryName"] ?? '',
         quantity: 0,

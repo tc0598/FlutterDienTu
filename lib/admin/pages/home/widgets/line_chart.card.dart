@@ -84,7 +84,7 @@ class LineChartCard extends StatelessWidget {
         children: [
           const Text(
             "Steps Overview",
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,color: Colors.white),
           ),
           const SizedBox(
             height: 20,

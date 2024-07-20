@@ -36,7 +36,7 @@ class Profile extends StatelessWidget {
                 height: 15,
               ),
               const Text(
-                "Summer",
+                "Admin",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Colors.white),
               ),
               const SizedBox(

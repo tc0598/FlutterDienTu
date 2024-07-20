@@ -9,11 +9,11 @@ class ActivityDetailsCard extends StatelessWidget {
 
   final List<HealthModel> healthDetails = const [
     HealthModel(
-        icon: 'assets/svg/burn.svg', value: "305", title: "Calories burned"),
-    HealthModel(icon: 'assets/svg/steps.svg', value: "10,983", title: "Steps"),
+        icon: 'assets/svg/burn.svg', value: "305", title: "Đốt Calo"),
+    HealthModel(icon: 'assets/svg/steps.svg', value: "10,983", title: "Số bước đi"),
     HealthModel(
-        icon: 'assets/svg/distance.svg', value: "7km", title: "Distance"),
-    HealthModel(icon: 'assets/svg/sleep.svg', value: "7h48m", title: "Sleep"),
+        icon: 'assets/svg/distance.svg', value: "7km", title: "Khoảng cách"),
+    HealthModel(icon: 'assets/svg/sleep.svg', value: "7h48m", title: "Ngủ"),
   ];
 
   @override

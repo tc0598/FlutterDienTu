@@ -212,5 +212,75 @@ Future<String> login(String accountID, String password) async {
       rethrow;
     }
   }
+
+  Future<bool> addProduct(Product data, String token) async {
+    try {
+      final body = FormData.fromMap({
+        'name': data.name,
+        'description': data.description,
+        'imageURL': data.image,
+        'Price': data.price,
+        'CategoryID': data.categoryID
+      });
+      Response res = await api.sendRequest.post('/addProduct',
+          options: Options(headers: header(token)), data: body);
+      if (res.statusCode == 200) {
+        print("ok add product");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+  Future<bool> removeProduct(
+      int productID, String accountID, String token) async {
+    try {
+      final body =
+          FormData.fromMap({'productID': productID, 'accountID': accountID});
+      Response res = await api.sendRequest.delete('/removeProduct',
+          options: Options(headers: header(token)), data: body);
+      if (res.statusCode == 200) {
+        print("ok remove product");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+Future<bool> updateProduct(
+      Product data, String accountID, String token) async {
+    try {
+      final body = FormData.fromMap({
+        'id': data.id,
+        'name': data.name,
+        'description': data.description,
+        'imageURL': data.image,
+        'Price': data.price,
+        'categoryID': data.categoryID,
+        'accountID': accountID
+      });
+      Response res = await api.sendRequest.put('/updateProduct',
+          options: Options(headers: header(token)), data: body);
+      if (res.statusCode == 200) {
+        print("ok update product");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+
 }
 

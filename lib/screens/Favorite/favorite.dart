@@ -11,8 +11,6 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
-
-
   @override
   Widget build(BuildContext context) {
     final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
@@ -20,40 +18,47 @@ class _FavoriteState extends State<Favorite> {
     final finalList = provider.favorites;
     return Scaffold(
       backgroundColor: color1,
-      appBar: AppBar(backgroundColor: color1,
-      title: const Text("Yêu thích",style: TextStyle(fontWeight: FontWeight.bold, color: color2, fontSize: 25)),
-      centerTitle: true,
-    ),
-    body: Column(children: [ Expanded(
+      appBar: AppBar(
+        backgroundColor: color1,
+        title: const Text(
+          "Yêu thích",
+          style: TextStyle(fontWeight: FontWeight.bold, color: color2, fontSize: 25),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Expanded(
             child: ListView.builder(
-                itemCount: finalList.length,
-                itemBuilder: (context, index) {
-                  final cartItems = finalList[index];
-                  return Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 85,
-                                width: 85,
-                                decoration: BoxDecoration(
-                                  color: color1,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                child: Image.asset(cartItems.image),
+              itemCount: finalList.length,
+              itemBuilder: (context, index) {
+                final cartItems = finalList[index];
+                return Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 85,
+                              width: 85,
+                              decoration: BoxDecoration(
+                                color: color1,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              const SizedBox(width: 10),
-                              Column(
+                              padding: const EdgeInsets.all(10),
+                              child: Image.network(cartItems.image),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -62,6 +67,8 @@ class _FavoriteState extends State<Favorite> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                     ),
+                                    maxLines: 2, 
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
@@ -73,7 +80,6 @@ class _FavoriteState extends State<Favorite> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    // "\$${cartItems.price}"
                                     formatCurrency.format(cartItems.price),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -81,35 +87,39 @@ class _FavoriteState extends State<Favorite> {
                                     ),
                                   ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 50,
-                        right: 40,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                finalList.removeAt(index);
-                                setState(() {});
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                                size: 25,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  );
-                }),
-          ),],),
+                    ),
+                    Positioned(
+                      top: 50,
+                      right: 40,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              finalList.removeAt(index);
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 25,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

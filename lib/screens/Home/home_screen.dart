@@ -29,6 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Product> _watch = [];
   late List<Product> _headphones = [];
   late List<Product> _televisions = [];
+  late List<Product> _tulanh = [];
+
+
 
   @override
   void initState() {
@@ -63,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _laptop = products.where((laptop) => laptop.categoryID == 3537).toList();
         _watch = products.where((watch) => watch.categoryID == 3538).toList();
         _headphones = products.where((headphones) => headphones.categoryID == 3539).toList();
-        _televisions =
-            products.where((televisions) => televisions.categoryID == 3540).toList();
+        _televisions = products.where((televisions) => televisions.categoryID == 3540).toList();
+        _tulanh = products.where((tulanh) => tulanh.categoryID == 4042).toList();
       });
       print('Number of phones: ${_phones.length}');
       print('Number of laptop: ${_laptop.length}');
@@ -96,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _laptop,
       _watch,
       _headphones,
-      _televisions
+      _televisions,
+      _tulanh,
     ];
 
     return Scaffold(

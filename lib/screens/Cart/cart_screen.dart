@@ -13,10 +13,12 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
+
   @override
   Widget build(BuildContext context) {
     final provider = CartProvider.of(context);
     final finalList = provider.cart;
+
     productQuantity(IconData icon, int index) {
       return GestureDetector(
         onTap: () {
@@ -26,7 +28,7 @@ class _CartScreenState extends State<CartScreen> {
                 : provider.decrementQtn(index);
           });
         },
-        child: Icon(icon,size: 20),
+        child: Icon(icon, size: 20),
       );
     }
 
@@ -34,43 +36,28 @@ class _CartScreenState extends State<CartScreen> {
       bottomSheet: const CheckOutBox(),
       backgroundColor: color1,
       body: SafeArea(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(width: 12),
-                // IconButton(
-                //   style: IconButton.styleFrom(
-                //     backgroundColor: Colors.white,
-                //     padding: const EdgeInsets.all(15),
-                //   ),
-                //   onPressed: () {
-                //     Navigator.pop(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => const BottomNavBar(),
-                //       ),
-                //     );
-                //   },
-                //   icon: const Icon(Icons.arrow_back_ios),
-                // ),
-                const Text(
-                  "Giỏ hàng của tôi",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: color2,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 12),
+                  const Text(
+                    "Giỏ hàng của tôi",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: color2,
+                    ),
                   ),
-                ),
-                Container(),
-              ],
+                  Container(), 
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
+            Expanded(
+              child: ListView.builder(
                 itemCount: finalList.length,
                 itemBuilder: (context, index) {
                   final cartItems = finalList[index];
@@ -86,6 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           padding: const EdgeInsets.all(10),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 height: 120,
@@ -95,38 +83,44 @@ class _CartScreenState extends State<CartScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 padding: const EdgeInsets.all(10),
-                                child: Image.asset(cartItems.image),
+                                child: Image.network(cartItems.image),
                               ),
                               const SizedBox(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    cartItems.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      cartItems.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: null, 
+                                      overflow: TextOverflow.visible, 
                                     ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    cartItems.categoryID.toString(),
-                                    style: TextStyle(
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      cartItems.categoryID.toString(),
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                        color: Colors.grey.shade400),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    // "\$${cartItems.price}"
-                                    formatCurrency.format(cartItems.price),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                                        color: Colors.grey.shade400,
+                                      ),
+                                      maxLines: null, 
+                                      overflow: TextOverflow.visible, 
                                     ),
-                                  ),
-                                ],
-                              )
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      formatCurrency.format(cartItems.price),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -148,9 +142,7 @@ class _CartScreenState extends State<CartScreen> {
                                 size: 25,
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                             Container(
                               height: 40,
                               decoration: BoxDecoration(
@@ -162,15 +154,18 @@ class _CartScreenState extends State<CartScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(width: 10),
                                   productQuantity(Icons.add, index),
                                   const SizedBox(width: 10),
-                                  Text(cartItems.quantity.toString(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),),
+                                  Text(
+                                    cartItems.quantity.toString(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                   const SizedBox(width: 10),
                                   productQuantity(Icons.remove, index),
                                   const SizedBox(width: 10),
@@ -182,10 +177,12 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ],
                   );
-                }),
-          ),
-        ],
-      )),
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

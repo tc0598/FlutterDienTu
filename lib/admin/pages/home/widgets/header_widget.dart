@@ -27,7 +27,7 @@ class Header extends StatelessWidget {
                   padding: EdgeInsets.all(3.0),
                   child: Icon(
                     Icons.menu,
-                    color: Colors.grey,
+                    color: Colors.black,
                     size: 25,
                   ),
                 ),
@@ -69,7 +69,7 @@ class Header extends StatelessWidget {
                 IconButton(
                   icon: const Icon(
                     Icons.search,
-                    color: Colors.grey,
+                    color: Colors.black,
                     size: 25,
                   ),
                   onPressed: () {},
@@ -79,7 +79,7 @@ class Header extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundColor: Colors.transparent,
                     child: Image.asset(
-                      "assets/images/avatar.png",
+                      "images/profile3.png",
                       width: 32,
                     ),
                   ),

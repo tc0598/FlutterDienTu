@@ -11,7 +11,7 @@ class BarGraphCard extends StatelessWidget {
 
   final List<BarGraphModel> data = [
     BarGraphModel(
-        lable: "Activity Level",
+        lable: "Activity Level,",
         color: const Color(0xFFFEB95A),
         graph: [
           GraphModel(x: 0, y: 8),

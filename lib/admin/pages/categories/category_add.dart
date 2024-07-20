@@ -72,7 +72,6 @@ class _CategoryAddState extends State<CategoryAdd> {
       ),
       body: GestureDetector(
         onTap: () {
-          // Dismiss the keyboard when tapping outside of the input fields
           FocusScope.of(context).unfocus();
         },
         child: Padding(
@@ -105,7 +104,7 @@ class _CategoryAddState extends State<CategoryAdd> {
                           color: Colors.black.withOpacity(0.5),
                           blurRadius: 10,
                           spreadRadius: 5,
-                          offset: Offset(0, 5), // changes position of shadow
+                          offset: Offset(0, 5), 
                         ),
                       ],
                     ),
