@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MultiProvider(
+  Widget build(BuildContext context) => MultiProvider(      
         providers: [
           ChangeNotifierProvider(create: (_) => CartProvider()),
           ChangeNotifierProvider(create: (_) => FavoriteProvider())

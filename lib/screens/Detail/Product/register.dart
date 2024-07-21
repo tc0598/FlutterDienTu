@@ -13,6 +13,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   int _gender = 0;
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _numberIDController = TextEditingController();
@@ -40,6 +41,20 @@ class _RegisterState extends State<Register> {
         gender: getGender(),
         imageUrl: _imageURL.text,
         numberID: _numberIDController.text));
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      String response = await register();
+      if (response == "123") {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const LoginScreen()));
+      } else {
+        print(response);
+      }
+    }
   }
 
   @override
@@ -100,410 +115,349 @@ class _RegisterState extends State<Register> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Column(
-                      children: <Widget>[
-                        const SizedBox(height: 60),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1400),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 60),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1400),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(225, 95, 27, .3),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 10),
                                   ),
-                                  child: TextField(
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  _buildTextField(
                                     controller: _accountController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Mã số sinh viên",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.account_circle,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Mã số sinh viên",
+                                    prefixIcon: Icons.account_circle,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập mã số sinh viên';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _passwordController,
+                                    hintText: "Mật khẩu",
+                                    prefixIcon: Icons.lock,
                                     obscureText: true,
-                                    decoration: const InputDecoration(
-                                      hintText: "Mật khẩu",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.lock,
-                                          color: Colors.orange),
-                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập mật khẩu';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _confirmPasswordController,
+                                    hintText: "Nhập lại mật khẩu",
+                                    prefixIcon: Icons.lock_outline,
                                     obscureText: true,
-                                    decoration: const InputDecoration(
-                                      hintText: "Nhập lại mật khẩu",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.lock_outline,
-                                          color: Colors.orange),
-                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập lại mật khẩu';
+                                      }
+                                      if (value != _passwordController.text) {
+                                        return 'Mật khẩu không khớp';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _fullNameController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Tên đầy đủ",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.person,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Tên đầy đủ",
+                                    prefixIcon: Icons.person,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập tên đầy đủ';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _numberIDController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Chứng minh nhân dân",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.credit_card,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Chứng minh nhân dân",
+                                    prefixIcon: Icons.credit_card,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập chứng minh nhân dân';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _phoneNumberController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Số điện thoại",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.phone,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Số điện thoại",
+                                    prefixIcon: Icons.phone,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập số điện thoại';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _birthDayController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Ngày sinh",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.cake,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Ngày sinh",
+                                    prefixIcon: Icons.cake,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập ngày sinh';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _schoolYearController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Năm học",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.school,
-                                          color: Colors.orange),
-                                    ),
+                                    hintText: "Năm học",
+                                    prefixIcon: Icons.school,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập năm học';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
+                                  _buildTextField(
                                     controller: _schoolKeyController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Khóa học",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      prefixIcon:
-                                          Icon(Icons.key, color: Colors.orange),
-                                    ),
+                                    hintText: "Khóa học",
+                                    prefixIcon: Icons.key,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Vui lòng nhập khóa học';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(21),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: _imageURL,
-                                    decoration: const InputDecoration(
-                                      labelText: "Hình ảnh URL",
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                      ),
-                                      icon: Icon(Icons.image,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(21),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.people,
-                                        color: Colors.orange,
-                                      ),
-                                      SizedBox(width: 11),
-                                      Text(
-                                        "Giới tính",
-                                        style: TextStyle(
+                                  Padding(
+                                    padding: const EdgeInsets.all(21),
+                                    child: TextFormField(
+                                      controller: _imageURL,
+                                      decoration: const InputDecoration(
+                                        labelText: "Hình ảnh URL",
+                                        labelStyle: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 15,
                                         ),
+                                        icon: Icon(Icons.image, color: Colors.orange),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Vui lòng nhập hình ảnh URL';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(21),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.people, color: Colors.orange),
+                                        SizedBox(width: 11),
+                                        Text(
+                                          "Giới tính",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: ListTile(
+                                          contentPadding: const EdgeInsets.all(0),
+                                          title: const Text("Nam"),
+                                          dense: true,
+                                          leading: Transform.translate(
+                                              offset: const Offset(16, 0),
+                                              child: Radio<int>(
+                                                value: 1,
+                                                groupValue: _gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _gender = value!;
+                                                  });
+                                                },
+                                              )),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                            contentPadding: const EdgeInsets.all(0),
+                                            title: const Text("Nữ"),
+                                            dense: true,
+                                            leading: Transform.translate(
+                                              offset: const Offset(16, 0),
+                                              child: Radio<int>(
+                                                value: 2,
+                                                groupValue: _gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _gender = value!;
+                                                  });
+                                                },
+                                              ),
+                                            )),
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                            contentPadding: const EdgeInsets.all(0),
+                                            title: const Text("Khác"),
+                                            dense: true,
+                                            leading: Transform.translate(
+                                              offset: const Offset(16, 0),
+                                              child: Radio<int>(
+                                                value: 3,
+                                                groupValue: _gender,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _gender = value!;
+                                                  });
+                                                },
+                                              ),
+                                            )),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: ListTile(
-                                        contentPadding: const EdgeInsets.all(0),
-                                        title: const Text("Nam"),
-                                        dense: true,
-                                        leading: Transform.translate(
-                                            offset: const Offset(16, 0),
-                                            child: Radio(
-                                              value: 1,
-                                              groupValue: _gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _gender = value!;
-                                                });
-                                              },
-                                            )),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: ListTile(
-                                          contentPadding:
-                                              const EdgeInsets.all(0),
-                                          title: const Text("Nữ"),
-                                          dense: true,
-                                          leading: Transform.translate(
-                                            offset: const Offset(16, 0),
-                                            child: Radio(
-                                              value: 2,
-                                              groupValue: _gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _gender = value!;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                    Expanded(
-                                      child: ListTile(
-                                          contentPadding:
-                                              const EdgeInsets.all(0),
-                                          title: const Text("Khác"),
-                                          dense: true,
-                                          leading: Transform.translate(
-                                            offset: const Offset(16, 0),
-                                            child: Radio(
-                                              value: 3,
-                                              groupValue: _gender,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _gender = value!;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 40),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1600),
-                          child: MaterialButton(
-                            onPressed: () async {
-                              String respone = await register();
-                              if (respone == "123") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()));
-                              } else {
-                                print(respone);
-                              }
-                            },
-                            height: 50,
-                            color: Colors.orange[900],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
+                          const SizedBox(height: 40),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1600),
+                            child: MaterialButton(
+                              onPressed: _submitForm,
+                              height: 50,
+                              color: Colors.orange[900],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Đăng kí",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
-                            child: const Center(
-                              child: Text(
-                                "Đăng kí",
+                          ),
+                          const SizedBox(height: 5),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1700),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginScreen()),
+                                );
+                              },
+                              child: const Text(
+                                'Đăng nhập',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1700),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
-                              );
-                            },
+                          const SizedBox(height: 50),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1700),
                             child: const Text(
-                              'Đăng nhập',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                              "Tiếp tục với",
+                              style: TextStyle(color: Colors.grey),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 50),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1700),
-                          child: const Text(
-                            "Tiếp tục với",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: FadeInUp(
-                                duration: const Duration(milliseconds: 1800),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 50,
-                                  color: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      "Facebook",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                          const SizedBox(height: 30),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    color: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Facebook",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 30),
-                            Expanded(
-                              child: FadeInUp(
-                                duration: const Duration(milliseconds: 1900),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 50,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  color: Colors.black,
-                                  child: const Center(
-                                    child: Text(
-                                      "Github",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                              const SizedBox(width: 30),
+                              Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1900),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    color: Colors.black,
+                                    child: const Center(
+                                      child: Text(
+                                        "Github",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              SizedBox(width: 30),
+                               Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    color: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Youtube",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -522,5 +476,33 @@ class _RegisterState extends State<Register> {
       return "Nữ";
     }
     return "Khác";
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData prefixIcon,
+    bool obscureText = false,
+    required FormFieldValidator<String> validator,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.shade200),
+        ),
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          border: InputBorder.none,
+          prefixIcon: Icon(prefixIcon, color: Colors.orange),
+        ),
+        validator: validator,
+      ),
+    );
   }
 }

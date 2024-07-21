@@ -1,15 +1,52 @@
+import 'dart:ffi' hide Size;
+import 'dart:ui';
 import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
+import 'package:app_shop_dien_tu/data/api.dart';
+import 'package:app_shop_dien_tu/data/sqlite.dart';
+import 'package:app_shop_dien_tu/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CheckOutBox extends StatelessWidget {
+class CheckOutBox extends StatefulWidget {
   const CheckOutBox({super.key});
 
   @override
+  State<CheckOutBox> createState() => CheckOutBoxState();
+}
+
+class CheckOutBoxState extends State<CheckOutBox> {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final DatabaseHelper _databaseService = DatabaseHelper();
+  dynamic tongReal = 10000;
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_Vn');
+
+  void updateTotal(dynamic totalUpdate) {
+    setState(() {
+      tongReal = totalUpdate;
+    });
+  }
+
+  Future<void> total() async {
+    List<Cart> items = await _databaseService.products();
+    dynamic tong = 0;
+    items.forEach((item) => tong += item.count * item.price);
+    setState(() {
+      tongReal = tong;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    total();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_Vn');
     final provider = CartProvider.of(context);
+
     return Container(
       height: 280,
       width: double.infinity,
@@ -88,7 +125,7 @@ class CheckOutBox extends StatelessWidget {
               ),
               Text(
                 // "\$${provider.totalPrice()}"
-                formatCurrency.format(provider.totalPrice()),
+                formatCurrency.format(tongReal),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -98,10 +135,16 @@ class CheckOutBox extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: (){},
+            onPressed: () async {
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              List<Cart> temp = await _databaseHelper.products();
+              await APIRepository()
+                  .addBill(temp, pref.getString('token').toString());
+              _databaseHelper.clear();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: color2,
-              minimumSize: const Size(double.infinity, 55),
+              minimumSize: const Size(500, 50),
             ),
             child: const Text(
               "Đặt hàng ",

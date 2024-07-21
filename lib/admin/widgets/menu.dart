@@ -19,7 +19,6 @@ class _MenuState extends State<Menu> {
     MenuModel(icon: 'assets/svg/home.svg', title: "Dashboard"),
     MenuModel(icon: 'assets/svg/profile.svg', title: "Danh mục sản phẩm"),
     MenuModel(icon: 'assets/svg/exercise.svg', title: "Sản phẩm"),
-    MenuModel(icon: 'assets/svg/setting.svg', title: "Edit"),
     MenuModel(icon: 'assets/svg/history.svg', title: "History"),
     MenuModel(icon: 'assets/svg/signout.svg', title: "Signout"),
   ];

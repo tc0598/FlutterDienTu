@@ -1,5 +1,7 @@
 import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
+import 'package:app_shop_dien_tu/data/sqlite.dart';
+import 'package:app_shop_dien_tu/models/cart.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +14,24 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
+  final DatabaseHelper _databaseService = DatabaseHelper();
+
   int currentIndex = 1;
+
+   Future<void> _onSave(Product pro) async {
+    print('them vao cart');
+    _databaseService.insertProduct(Cart(
+      name: pro.name,
+      price: pro.price,
+      img: pro.image,
+      des: pro.description,
+      count: 1,
+      productID: pro.id,
+    ));
+    
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +103,8 @@ class _AddToCartState extends State<AddToCart> {
             GestureDetector(
               onTap: () {
                 provider.toggleFavorite(widget.product);
+                print('test haha');
+                _onSave(widget.product);
                 const snackBar = SnackBar(
                   content: Text(
                     "Thêm sản phẩm thành công!",

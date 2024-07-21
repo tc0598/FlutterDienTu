@@ -13,34 +13,32 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController accountController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool _obscureText = true; // Thêm biến này
+  bool _obscureText = true;
 
-  login() async {
-    // lấy token (lưu share_preference)
-    String token = await APIRepository()
-        .login(accountController.text, passwordController.text);
-    var user = await APIRepository().current(token);
-    // save share
-    saveUser(user);
-    if(token.isNotEmpty && accountController.text == '21dh111747'){
+  Future<void> login() async {
+    if (_formKey.currentState!.validate()) {
+      // lấy token (lưu share_preference)
+      String token = await APIRepository()
+          .login(accountController.text, passwordController.text);
+      var user = await APIRepository().current(token);
+      // save share
+      saveUser(user);
+      if (token.isNotEmpty && accountController.text == '21dh111747') {
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => DashBoard()));
+        return;
+      }
       Navigator.push(
-        context, MaterialPageRoute(builder: (context) =>  DashBoard()));
-    return token;
-    }
-    //
-    Navigator.push(
         context, MaterialPageRoute(builder: (context) => const BottomNavBar()));
-    return token;
+    }
   }
 
   @override
@@ -78,7 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: SingleChildScrollView(
             child: Column(
-              key: _formKey,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 80),
@@ -116,194 +113,230 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Column(
-                      children: <Widget>[
-                        const SizedBox(height: 60),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1400),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 60),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1400),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(225, 95, 27, .3),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 10),
                                   ),
-                                  child: TextField(
-                                    controller: accountController,
-                                    decoration: const InputDecoration(
-                                      hintText: "Tài khoản",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200),
-                                    ),
-                                  ),
-                                  child: TextField(
-                                    controller: passwordController,
-                                    obscureText: _obscureText,
-                                    decoration: InputDecoration(
-                                      hintText: "Mật khẩu",
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _obscureText
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
-                                          color: Colors.grey,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _obscureText = !_obscureText;
-                                          });
-                                        },
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade200),
                                       ),
                                     ),
+                                    child: TextFormField(
+                                      controller: accountController,
+                                      decoration: const InputDecoration(
+                                        hintText: "Tài khoản",
+                                        hintStyle: TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Vui lòng nhập tài khoản';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                                   ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.grey.shade200),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      controller: passwordController,
+                                      obscureText: _obscureText,
+                                      decoration: InputDecoration(
+                                        hintText: "Mật khẩu",
+                                        hintStyle: const TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _obscureText
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                            color: Colors.grey,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Vui lòng nhập mật khẩu';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1700),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Forgotpass()),
+                                  );
+                                },
+                                child: const Text(
+                                  'Quên mật khẩu',
+                                  style: TextStyle(color: Colors.grey),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1700),
-                          child:Align(
-                            alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Forgotpass()),
-                              );
-                            },
-                            child: const Text(
-                              'Quên mật khẩu',
-                              style: TextStyle(color: Colors.grey),
+                          const SizedBox(height: 40),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1600),
+                            child: MaterialButton(
+                              onPressed: login,
+                              height: 50,
+                              color: Colors.orange[900],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Đăng nhập",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                        const SizedBox(height: 40),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1600),
-                          child: MaterialButton(
-                            onPressed: login,
-                            height: 50,
-                            color: Colors.orange[900],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "Đăng nhập",
+                          const SizedBox(height: 5),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1700),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Register()),
+                                );
+                              },
+                              child: const Text(
+                                'Đăng kí',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1700),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Register()),
-                              );
-                            },
+                          const SizedBox(height: 50),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1700),
                             child: const Text(
-                              'Đăng kí',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                              "Tiếp tục với",
+                              style: TextStyle(color: Colors.grey),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 50),
-                        FadeInUp(
-                          duration: const Duration(milliseconds: 1700),
-                          child: const Text(
-                            "Tiếp tục với",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: FadeInUp(
-                                duration: const Duration(milliseconds: 1800),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 50,
-                                  color: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      "Facebook",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                          const SizedBox(height: 30),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    color: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Facebook",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 30),
-                            Expanded(
-                              child: FadeInUp(
-                                duration: const Duration(milliseconds: 1900),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 50,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  color: Colors.black,
-                                  child: const Center(
-                                    child: Text(
-                                      "Github",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                              const SizedBox(width: 30),
+                              Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1900),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    color: Colors.black,
+                                    child: const Center(
+                                      child: Text(
+                                        "Github",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              const SizedBox(width: 30),
+                              Expanded(
+                                child: FadeInUp(
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    height: 50,
+                                    color: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Youtube",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )

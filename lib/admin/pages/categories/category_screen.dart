@@ -67,8 +67,8 @@ class _CategoryAdminScreenState extends State<CategoryAdminScreen> {
           'Quản lý danh mục sản phẩm',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        elevation: 0,
         backgroundColor: Color(0xFF21222D),
+        elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
@@ -81,29 +81,6 @@ class _CategoryAdminScreenState extends State<CategoryAdminScreen> {
         color: Color.fromARGB(255, 144, 204, 231), 
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: const Color.fromARGB(255, 255, 255, 255), width: 1.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  ),
-                  labelText: 'Search Categories',
-                  suffixIcon: Icon(Icons.search),
-                ),
-              ),
-            ),
             Expanded(
               child: FutureBuilder<List<CategoryModel>>(
                 future: futureCategories,

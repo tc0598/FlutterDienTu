@@ -1,5 +1,7 @@
 import 'package:app_shop_dien_tu/Provider/cart_provider.dart';
 import 'package:app_shop_dien_tu/const.dart';
+import 'package:app_shop_dien_tu/data/sqlite.dart';
+import 'package:app_shop_dien_tu/models/cart.dart';
 import 'package:app_shop_dien_tu/screens/Cart/check_out.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +14,28 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final DatabaseHelper _databaseService = DatabaseHelper();
+
   final formatCurrency = NumberFormat.simpleCurrency(locale: 'vi_VN');
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  late List<Cart> cartItems = [];
+  final GlobalKey<CheckOutBoxState> _childKey = GlobalKey<CheckOutBoxState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _getProducts();
+  }
+
+  Future<void> _getProducts() async {
+    var temp = await _databaseHelper.products();
+    dynamic tong = 0;
+    temp.forEach((item) => tong += item.count * item.price);
+    setState(() {
+      cartItems = temp;
+      _childKey.currentState?.tongReal = tong;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +44,14 @@ class _CartScreenState extends State<CartScreen> {
 
     productQuantity(IconData icon, int index) {
       return GestureDetector(
-        onTap: () {
-          setState(() {
-            icon == Icons.add
-                ? provider.incrementQtn(index)
-                : provider.decrementQtn(index);
-          });
+        onTap: () async {
+          if (icon == Icons.add) {
+            await _databaseService.add(cartItems[index]);
+            await _getProducts();
+          } else {
+            await _databaseService.minus(cartItems[index]);
+            await _getProducts();
+          }
         },
         child: Icon(icon, size: 20),
       );
@@ -52,15 +77,14 @@ class _CartScreenState extends State<CartScreen> {
                       color: color2,
                     ),
                   ),
-                  Container(), 
+                  Container(),
                 ],
               ),
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: finalList.length,
+                itemCount: cartItems.length,
                 itemBuilder: (context, index) {
-                  final cartItems = finalList[index];
                   return Stack(
                     children: [
                       Padding(
@@ -70,6 +94,14 @@ class _CartScreenState extends State<CartScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
                           padding: const EdgeInsets.all(10),
                           child: Row(
@@ -78,12 +110,13 @@ class _CartScreenState extends State<CartScreen> {
                               Container(
                                 height: 120,
                                 width: 100,
-                                decoration: BoxDecoration(
-                                  color: color1,
-                                  borderRadius: BorderRadius.circular(20),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(1),
+                                  child: Image.network(
+                                    cartItems[index].img,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                padding: const EdgeInsets.all(10),
-                                child: Image.network(cartItems.image),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
@@ -91,28 +124,28 @@ class _CartScreenState extends State<CartScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      cartItems.name,
+                                      cartItems[index].name,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                       ),
-                                      maxLines: null, 
-                                      overflow: TextOverflow.visible, 
+                                      maxLines: null,
+                                      overflow: TextOverflow.visible,
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      cartItems.categoryID.toString(),
+                                      cartItems[index].productID.toString(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
                                         color: Colors.grey.shade400,
                                       ),
-                                      maxLines: null, 
-                                      overflow: TextOverflow.visible, 
+                                      maxLines: null,
+                                      overflow: TextOverflow.visible,
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      formatCurrency.format(cartItems.price),
+                                      formatCurrency.format(cartItems[index].price),
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
@@ -132,9 +165,9 @@ class _CartScreenState extends State<CartScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             IconButton(
-                              onPressed: () {
-                                finalList.removeAt(index);
-                                setState(() {});
+                              onPressed: () async {
+                                _databaseService.deleteProduct(cartItems[index].productID);
+                                await _getProducts();
                               },
                               icon: const Icon(
                                 Icons.delete,
@@ -152,6 +185,14 @@ class _CartScreenState extends State<CartScreen> {
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +201,7 @@ class _CartScreenState extends State<CartScreen> {
                                   productQuantity(Icons.add, index),
                                   const SizedBox(width: 10),
                                   Text(
-                                    cartItems.quantity.toString(),
+                                    cartItems[index].count.toString(),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,

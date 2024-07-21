@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:app_shop_dien_tu/data/api.dart';
+import 'package:app_shop_dien_tu/data/sqlite.dart';
+import 'package:app_shop_dien_tu/models/cart.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
 import 'package:app_shop_dien_tu/models/user.dart';
 import 'package:app_shop_dien_tu/screens/Home/Widget/home_app_bar.dart';
@@ -31,8 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Product> _televisions = [];
   late List<Product> _tulanh = [];
 
-
-
   @override
   void initState() {
     super.initState();
@@ -63,11 +63,17 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _products = products;
         _phones = products.where((phone) => phone.categoryID == 3536).toList();
-        _laptop = products.where((laptop) => laptop.categoryID == 3537).toList();
+        _laptop =
+            products.where((laptop) => laptop.categoryID == 3537).toList();
         _watch = products.where((watch) => watch.categoryID == 3538).toList();
-        _headphones = products.where((headphones) => headphones.categoryID == 3539).toList();
-        _televisions = products.where((televisions) => televisions.categoryID == 3540).toList();
-        _tulanh = products.where((tulanh) => tulanh.categoryID == 4042).toList();
+        _headphones = products
+            .where((headphones) => headphones.categoryID == 3539)
+            .toList();
+        _televisions = products
+            .where((televisions) => televisions.categoryID == 3540)
+            .toList();
+        _tulanh =
+            products.where((tulanh) => tulanh.categoryID == 4042).toList();
       });
       print('Number of phones: ${_phones.length}');
       print('Number of laptop: ${_laptop.length}');
@@ -201,8 +207,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 itemCount: selectedCategories[selectedIndex].length,
                 itemBuilder: (context, index) {
-                  return ProductCart(
-                    product: selectedCategories[selectedIndex][index],
+                  return GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              '${selectedCategories[selectedIndex][index].name} added to cart.'),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                    child: ProductCart(
+                      product: selectedCategories[selectedIndex][index],
+                    ),
                   );
                 },
               ),

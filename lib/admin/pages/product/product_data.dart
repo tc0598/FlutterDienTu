@@ -1,14 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:app_shop_dien_tu/admin/pages/product/product_add.dart';
 import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductBuilder extends StatefulWidget {
-  const ProductBuilder({
-    Key? key,
-  }) : super(key: key);
+  const ProductBuilder({Key? key}) : super(key: key);
 
   @override
   State<ProductBuilder> createState() => _ProductBuilderState();
@@ -33,6 +31,11 @@ class _ProductBuilderState extends State<ProductBuilder> {
             child: CircularProgressIndicator(),
           );
         }
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(
+            child: Text("No products available"),
+          );
+        }
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
@@ -52,7 +55,7 @@ class _ProductBuilderState extends State<ProductBuilder> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 15,
+      elevation: 10,
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -77,16 +80,16 @@ class _ProductBuilderState extends State<ProductBuilder> {
                   Text(
                     pro.name,
                     style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    NumberFormat('#,##0').format(pro.price),
+                    "${NumberFormat('#,##0').format(pro.price)} VND",
                     style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
                       color: Colors.red,
                     ),
                   ),
@@ -108,7 +111,7 @@ class _ProductBuilderState extends State<ProductBuilder> {
                     setState(() {});
                   },
                   icon: const Icon(
-                    Icons.delete,
+                    Icons.remove_circle_outline, // Icon mới cho nút delete
                     color: Colors.red,
                   ),
                 ),
@@ -127,8 +130,8 @@ class _ProductBuilderState extends State<ProductBuilder> {
                         .then((_) => setState(() {}));
                   },
                   icon: Icon(
-                    Icons.edit,
-                    color: Colors.yellow.shade800,
+                    Icons.edit_note, // Icon mới cho nút edit
+                    color: Colors.orange.shade800,
                   ),
                 ),
               ],
@@ -184,11 +187,11 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        flag ? "Xem thêm" : "Rút gọn",
+                        flag ? "Read more" : "Show less",
                         style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 16,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],

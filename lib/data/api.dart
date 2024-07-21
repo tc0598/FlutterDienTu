@@ -1,3 +1,5 @@
+import 'package:app_shop_dien_tu/models/bill.dart';
+import 'package:app_shop_dien_tu/models/cart.dart';
 import 'package:app_shop_dien_tu/models/category.dart';
 import 'package:app_shop_dien_tu/models/forgotpassword.dart';
 import 'package:app_shop_dien_tu/models/product_model.dart';
@@ -281,6 +283,90 @@ Future<bool> updateProduct(
     }
   }
 
+Future<bool> addBill(List<Cart> products, String token) async {
+    var list = [];
+    try {
+      for (int i = 0; i < products.length; i++) {
+        list.add({
+          'productID': products[i].productID,
+          'count': products[i].count,
+        });
+      }
+      Response res = await api.sendRequest.post('/Order/addBill',
+          options: Options(headers: header(token)), data: list);
+      if (res.statusCode == 200) {
+        print("add bill ok");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
 
+
+  Future<List<BillModel>> getHistory(String token) async {
+    try {
+      Response res = await api.sendRequest
+          .get('/Bill/getHistory', options: Options(headers: header(token)));
+      return res.data
+          .map((e) => BillModel.fromJson(e))
+          .cast<BillModel>()
+          .toList();
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+
+  Future<List<BillDetailModel>> getHistoryDetail(
+      String billID, String token) async {
+    try {
+      Response res = await api.sendRequest.post('/Bill/getByID?billID=$billID',
+          options: Options(headers: header(token)));
+      return res.data
+          .map((e) => BillDetailModel.fromJson(e))
+          .cast<BillDetailModel>()
+          .toList();
+    } catch (ex) {
+      print(ex);
+      rethrow;
+    }
+  }
+// Future<bool> updateUser(User data, String token) async {
+//   try {
+//     final body = FormData.fromMap({
+//       'idNumber': data.idNumber,
+//       'accountID': data.accountId,
+//       'fullName': data.fullName,
+//       'phoneNumber': data.phoneNumber,
+//       'imageURL': data.imageURL,
+//       'birthDay': data.birthDay,
+//       'gender': data.gender,
+//       'schoolYear': data.schoolYear,
+//       'schoolKey': data.schoolKey,
+//       'dateCreated': data.dateCreated,
+//       'status': data.status,
+//     });
+
+//     Response res = await api.sendRequest.put('/updateProfile',
+//         options: Options(headers: header(token)), data: body);
+
+//     if (res.statusCode == 200) {
+//       return true;
+//     } else {
+//       // In chi tiết lỗi
+//       print('Update failed: ${res.statusCode} ${res.statusMessage}');
+//       print('Response data: ${res.data}');
+//       return false;
+//     }
+//   } catch (e) {
+//     // In lỗi chi tiết
+//     print('Exception: $e');
+//     return false;
+//   }
+// }
 }
 
