@@ -1,7 +1,6 @@
-// ignore_for_file: dead_code
-
 import 'package:animate_do/animate_do.dart';
 import 'package:app_shop_dien_tu/admin/dashboard.dart';
+import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/data/sharepre.dart';
 import 'package:app_shop_dien_tu/screens/Detail/Product/forgotpass.dart';
@@ -33,11 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
       saveUser(user);
       if (token.isNotEmpty && accountController.text == '21dh111747') {
         Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DashBoard()));
+            context, MaterialPageRoute(builder: (context) => DashBoard()));
         return;
       }
-      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const BottomNavBar()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const BottomNavBar()));
     }
   }
 
@@ -78,12 +77,46 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 80),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Center(
+                        child: FadeInUp(
+                          duration: const Duration(milliseconds: 1000),
+                          child: CircleAvatar(
+                            radius: 30, // Kích thước của vòng tròn
+                            backgroundColor: Colors
+                                .white, // Màu nền của vòng tròn, có thể thay đổi nếu muốn
+                            child: ClipOval(
+                              child: Image.asset(
+                                "images/icon.png",
+                                width: 40, // Kích thước của hình ảnh
+                                height: 40,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Center(
+                        child: FadeInUp(
+                          duration: const Duration(milliseconds: 1000),
+                          child: const Text(
+                            "SHOPSANDIENTU",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
                       FadeInUp(
                         duration: const Duration(milliseconds: 1000),
                         child: const Text(
@@ -146,7 +179,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       controller: accountController,
                                       decoration: const InputDecoration(
                                         hintText: "Tài khoản",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                       ),
                                       validator: (value) {
@@ -170,7 +204,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       obscureText: _obscureText,
                                       decoration: InputDecoration(
                                         hintText: "Mật khẩu",
-                                        hintStyle: const TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         suffixIcon: IconButton(
                                           icon: Icon(
@@ -208,7 +243,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Forgotpass()),
+                                        builder: (context) =>
+                                            const Forgotpass()),
                                   );
                                 },
                                 child: const Text(
