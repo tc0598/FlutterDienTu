@@ -16,11 +16,11 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   List<MenuModel> menu = [
-    MenuModel(icon: 'assets/svg/home.svg', title: "Dashboard"),
+    MenuModel(icon: 'assets/svg/home.svg', title: "Trang chủ"),
     MenuModel(icon: 'assets/svg/profile.svg', title: "Danh mục sản phẩm"),
     MenuModel(icon: 'assets/svg/exercise.svg', title: "Sản phẩm"),
-    MenuModel(icon: 'assets/svg/history.svg', title: "History"),
-    MenuModel(icon: 'assets/svg/signout.svg', title: "Signout"),
+    MenuModel(icon: 'assets/svg/history.svg', title: "Lịch sử đơn hàng"),
+    MenuModel(icon: 'assets/svg/signout.svg', title: "Đăng xuất"),
   ];
 
   int selected = 0;
@@ -70,7 +70,10 @@ class _MenuState extends State<Menu> {
                       if (menu[i].title == "Sản phẩm") {
                         Navigator.pushNamed(context, '/product-admin');
                       }else
-                      if (menu[i].title == "Signout"){
+                      if (menu[i].title == "Lịch sử đơn hàng"){
+                        Navigator.pushNamed(context, '/history-admin');
+                      }else
+                      if (menu[i].title == "Đăng xuất"){
                         logOut(context);
                       }
                     },
