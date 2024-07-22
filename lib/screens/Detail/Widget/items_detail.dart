@@ -26,7 +26,7 @@ class ItemsDetail extends StatelessWidget {
         Row(
           children: [
             Text(
-              "\$${product.price}",
+              formatCurrency.format(product.price),
               style: const TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 25,

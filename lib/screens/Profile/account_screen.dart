@@ -179,14 +179,6 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             const SizedBox(height: 20),
             SettingItem(
-              title: "Vị trí của tôi",
-              icon: Icons.location_on,
-              bgColor: Colors.blue.shade100,
-              iconColor: Colors.blue,
-              onTap: () {},
-            ),
-            const SizedBox(height: 20),
-            SettingItem(
               title: "Đăng xuất",
               icon: Icons.logout,
               bgColor: Colors.red.shade100,

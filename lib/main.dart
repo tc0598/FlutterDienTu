@@ -3,7 +3,6 @@ import 'package:app_shop_dien_tu/Provider/favorite_provider.dart';
 import 'package:app_shop_dien_tu/admin/const.dart';
 import 'package:app_shop_dien_tu/admin/pages/categories/category_screen.dart';
 import 'package:app_shop_dien_tu/admin/pages/history/hisroty_admin_screen.dart';
-import 'package:app_shop_dien_tu/admin/pages/history/history_admin_detail.dart';
 import 'package:app_shop_dien_tu/admin/pages/product/product_screen.dart';
 import 'package:app_shop_dien_tu/screens/Auth/login.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +63,6 @@ class MainApp extends StatelessWidget {
             '/category-admin': (context) => CategoryAdminScreen(),
             '/product-admin': (context) => ProductList(),
             '/history-admin': (context) => HistoryList(),
-
           },
         ),
       );

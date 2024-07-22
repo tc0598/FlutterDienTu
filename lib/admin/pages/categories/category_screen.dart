@@ -78,7 +78,7 @@ class _CategoryAdminScreenState extends State<CategoryAdminScreen> {
         ),
       ),
       body: Container(
-        color: Color.fromARGB(255, 144, 204, 231), 
+        color: Color(0xFF21222D), 
         child: Column(
           children: [
             Expanded(
@@ -203,7 +203,7 @@ class _CategoryAdminScreenState extends State<CategoryAdminScreen> {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF21222D), Colors.lightBlue],
+              colors: [Color.fromARGB(255, 57, 194, 45), const Color.fromARGB(255, 3, 244, 43)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

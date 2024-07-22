@@ -93,7 +93,7 @@ class CheckOutBoxState extends State<CheckOutBox> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Tổng phụ",
+                "Giảm giá",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

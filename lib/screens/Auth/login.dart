@@ -75,61 +75,31 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Center(
-                        child: FadeInUp(
-                          duration: const Duration(milliseconds: 1000),
-                          child: CircleAvatar(
-                            radius: 30, // Kích thước của vòng tròn
-                            backgroundColor: Colors
-                                .white, // Màu nền của vòng tròn, có thể thay đổi nếu muốn
-                            child: ClipOval(
-                              child: Image.asset(
-                                "images/icon.png",
-                                width: 40, // Kích thước của hình ảnh
-                                height: 40,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[   
+                      IconButton(
+                        style: IconButton.styleFrom(
+                          backgroundColor: color1,
+                          padding: const EdgeInsets.all(20),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Center(
-                        child: FadeInUp(
-                          duration: const Duration(milliseconds: 1000),
-                          child: const Text(
-                            "SHOPSANDIENTU",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
+                        onPressed: () {},
+                        icon: Image.asset(
+                          "images/icon.png",
+                          height: 25,
                         ),
-                      ),
+                      ),                 
                       const SizedBox(height: 15),
                       FadeInUp(
                         duration: const Duration(milliseconds: 1000),
                         child: const Text(
                           "Đăng nhập",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      FadeInUp(
-                        duration: const Duration(milliseconds: 1300),
-                        child: const Text(
-                          "Xin mời bạn đăng nhập ạ !",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          style: TextStyle(color: Colors.white, fontSize: 35),
                         ),
                       ),
                     ],
@@ -179,9 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       controller: accountController,
                                       decoration: const InputDecoration(
                                         hintText: "Tài khoản",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
+                                        hintStyle: TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
+                                        prefixIcon: const Icon(Icons.account_circle, color: Colors.orange),
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -207,6 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         hintStyle:
                                             const TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
+                                        prefixIcon: const Icon(Icons.lock, color: Colors.orange),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _obscureText
@@ -265,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: const Center(
-                                child: Text(
+                                child: Text(                               
                                   "Đăng nhập",
                                   style: TextStyle(
                                       color: Colors.white,
@@ -286,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                               child: const Text(
-                                'Đăng kí',
+                                'Đăng ký',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),

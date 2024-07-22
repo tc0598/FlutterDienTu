@@ -30,22 +30,6 @@ class Description extends StatelessWidget {
                 ),
               ),
             ),
-            const Text(
-              "Thông số kỹ thuật",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-            const Text(
-              "Đánh giá",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
           ],
         ),
         const SizedBox(height: 20),

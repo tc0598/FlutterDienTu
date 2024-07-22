@@ -2,10 +2,9 @@ import 'package:app_shop_dien_tu/models/bill.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class HistoryAdminDetail extends StatelessWidget {
+class HistoryDetailAdmin extends StatelessWidget {
   final List<BillDetailModel> bill;
-
-  const HistoryAdminDetail({super.key, required this.bill});
+  const HistoryDetailAdmin({super.key, required this.bill});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +14,8 @@ class HistoryAdminDetail extends StatelessWidget {
           'Chi tiết hóa đơn',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        foregroundColor: Colors.white,
         backgroundColor: Color(0xFF21222D),
-
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

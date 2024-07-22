@@ -1,3 +1,4 @@
+import 'package:app_shop_dien_tu/admin/pages/history/history_detail.dart';
 import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/models/bill.dart';
@@ -7,9 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryList extends StatefulWidget {
-  const HistoryList({
-    Key? key,
-  }) : super(key: key);
+  const HistoryList({Key? key}) : super(key: key);
 
   @override
   State<HistoryList> createState() => _HistoryListState();
@@ -17,9 +16,12 @@ class HistoryList extends StatefulWidget {
 
 class _HistoryListState extends State<HistoryList> {
   Future<List<BillModel>> _getBills() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await APIRepository()
-        .getHistory(prefs.getString('token').toString());
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return await APIRepository().getHistory(prefs.getString('token').toString());
+    } catch (e) {
+      throw Exception('Failed to load bills');
+    }
   }
 
   @override
@@ -51,6 +53,10 @@ class _HistoryListState extends State<HistoryList> {
             return Center(
               child: Text('Đã xảy ra lỗi. Vui lòng thử lại sau.'),
             );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(
+              child: Text('Không có đơn hàng nào.'),
+            );
           }
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
@@ -71,15 +77,14 @@ class _HistoryListState extends State<HistoryList> {
     return InkWell(
       onTap: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        var temp = await APIRepository()
-            .getHistoryDetail(bill.id, prefs.getString('token').toString());
+        var temp = await APIRepository().getHistoryDetail(bill.id, prefs.getString('token').toString());
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HistoryDetail(bill: temp)),
+          MaterialPageRoute(builder: (context) => HistoryDetailAdmin(bill: temp)),
         );
       },
       child: Card(
-        elevation: 10, 
+        elevation: 10,
         shadowColor: Colors.black.withOpacity(1),
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
         shape: RoundedRectangleBorder(

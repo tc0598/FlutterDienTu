@@ -10,8 +10,9 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Spacer(),
         IconButton(
           style: IconButton.styleFrom(
             backgroundColor: color1,
@@ -23,19 +24,7 @@ class CustomAppBar extends StatelessWidget {
             height: 25,
           ),
         ),
-        IconButton(
-          style: IconButton.styleFrom(
-            backgroundColor: color1,
-            padding: const EdgeInsets.all(20),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CartScreen()),
-            );
-          },
-          icon: const Icon(Icons.shopping_cart_outlined),
-        ),
+        Spacer(),
       ],
     );
   }

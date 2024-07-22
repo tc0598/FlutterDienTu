@@ -20,7 +20,7 @@ class _ProductListState extends State<ProductList> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Container(
-        color: const Color.fromARGB(255, 144, 204, 231),
+        color: const Color(0xFF21222D),
         child: const Center(child: ProductBuilder()),
       ),
 floatingActionButton: FloatingActionButton(

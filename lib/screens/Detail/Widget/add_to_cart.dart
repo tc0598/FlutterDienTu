@@ -51,55 +51,6 @@ class _AddToCartState extends State<AddToCart> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.white,
-                  width: 2,
-                ),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      if (currentIndex != 1) {
-                        setState(() {
-                          currentIndex--;
-                        });
-                      }
-                    },
-                    iconSize: 18,
-                    icon: const Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    currentIndex.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        currentIndex++;
-                      });
-                    },
-                    iconSize: 18,
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             GestureDetector(
               onTap: () {
                 provider.toggleFavorite(widget.product);
@@ -124,7 +75,7 @@ class _AddToCartState extends State<AddToCart> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 50),
+                padding: const EdgeInsets.symmetric(horizontal: 128),
                 child: const Text(
                   "Mua ngay",
                   style: TextStyle(

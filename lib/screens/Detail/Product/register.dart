@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:app_shop_dien_tu/const.dart';
 import 'package:app_shop_dien_tu/data/api.dart';
 import 'package:app_shop_dien_tu/models/register.dart';
 import 'package:app_shop_dien_tu/screens/Auth/login.dart';
@@ -78,9 +79,21 @@ class _RegisterState extends State<Register> {
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,             
               children: <Widget>[
-                const SizedBox(height: 80),
+                SizedBox(height: 50),
+                IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: color1,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  onPressed: () {},
+                  icon: Image.asset(
+                    "images/icon.png",
+                    height: 25,
+                  ),
+                ),
+                const SizedBox(height: 5),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -89,16 +102,8 @@ class _RegisterState extends State<Register> {
                       FadeInUp(
                         duration: const Duration(milliseconds: 1000),
                         child: const Text(
-                          "Đăng Kí",
+                          "Đăng Ký",
                           style: TextStyle(color: Colors.white, fontSize: 40),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      FadeInUp(
-                        duration: const Duration(milliseconds: 1300),
-                        child: const Text(
-                          "Tạo cho mình 1 tài khoản nhé !",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
                     ],
@@ -351,7 +356,7 @@ class _RegisterState extends State<Register> {
                               ),
                               child: const Center(
                                 child: Text(
-                                  "Đăng kí",
+                                  "Đăng ký",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

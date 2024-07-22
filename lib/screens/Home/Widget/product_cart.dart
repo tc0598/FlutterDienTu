@@ -53,12 +53,15 @@ class ProductCart extends StatelessWidget {
                 ),
                 const SizedBox(height: 10,),
                 Row(children: [
-                  Text(
-                  "\$${product.price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.red,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      formatCurrency.format(product.price),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 ],)
